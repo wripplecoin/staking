@@ -1,0 +1,184 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+#app {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles (Logo & Navigation) */
+header {
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+#logo {
+    width: 150px;  /* Default logo size for desktop */
+    height: auto;
+    transition: width 0.3s ease;
+}
+
+.burger-menu {
+    font-size: 30px;
+    cursor: pointer;
+    display: none;  /* Initially hide the burger icon */
+}
+
+/* Navigation Menu Styles */
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #45a049;
+    border-radius: 5px;
+}
+
+/* Button Styles */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Input Fields */
+input {
+    margin: 10px 0;
+    padding: 8px;
+    width: 100%;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Section Titles */
+h1, h2, h3 {
+    text-align: center;
+    color: #333;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #4CAF50;
+    padding: 15px 0;
+    color: white;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Transaction Hash link */
+a {
+    color: #1E90FF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Loading Indicator */
+#loadingIndicator {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #f39c12;
+}
+
+/* Media Queries for responsive design */
+
+/* On devices smaller than 768px (like tablets and mobiles) */
+@media (max-width: 768px) {
+    #logo {
+        width: 100px;  /* Adjust logo size for tablets */
+    }
+
+    nav ul {
+        display: none;  /* Hide menu items by default on small screens */
+        flex-direction: column;  /* Stack the nav items vertically */
+        align-items: center;
+        width: 100%;
+    }
+
+    .burger-menu {
+        display: block;  /* Show burger menu on small screens */
+    }
+
+    nav.visible {
+        display: block;  /* Show the menu when it has the visible class */
+    }
+
+    nav ul li {
+        margin: 10px 0;  /* Add vertical margin for nav items */
+    }
+}
+
+/* On devices smaller than 480px (for very small screens like phones) */
+@media (max-width: 480px) {
+    #logo {
+        width: 80px;  /* Even smaller logo on small mobile screens */
+    }
+
+    nav ul li a {
+        font-size: 16px;  /* Smaller text size for mobile */
+    }
+}

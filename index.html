@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wRipple Staking</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favico.png" type="image/png">
+
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Importing required libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.7/dist/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider/dist/umd/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+<body>
+    
+    <header>
+        <div class="logo-container">
+            <!-- Logo -->
+            <img src="images/logo.png" alt="wRipple Logo" id="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#app">Home</a></li>
+                <li><a href="#stakingSection">Staking</a></li>
+                <li><a href="#unstakingSection">Unstaking</a></li>
+                <li><a href="https://pancakeswap.finance/?outputCurrency=BNB&inputCurrency=0xbbC9Fa4B395FeE68465C2Cd4a88cdE267a34ed2a">Buy wXRP</a></li>
+                <li><a href="https://bscscan.com/token/0xbbC9Fa4B395FeE68465C2Cd4a88cdE267a34ed2a">Smart Contract</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="app">
+        <h1>wRipple Staking</h1>
+
+        <!-- Wallet Connection -->
+        <div id="walletSection">
+            <button id="connectWallet" style="background-color: rgb(245, 104, 3);">Connect Wallet</button>
+            <button id="disconnectWallet" style="display: none;">Disconnect Wallet</button>
+            <p id="walletAddress">Wallet Address: Not Connected</p>
+        </div>
+
+         <!-- User Info Section -->
+         <section id="userInfo">
+            <h2>Your Staking Information</h2>
+            <p><strong>Your Stakes: <span id="userStake">0</span> Tokens</p>
+            <p><strong>Your Rewards (~5 minutes): </strong><span id="calculatedRewards">Loading...</span></p>
+            <button id="claimButton" onclick="claimRewards()">Claim Rewards</button>
+            <div id="loadingIndicator" style="display:none;">Processing transaction...</div>
+            <p id="txHash"></p>
+        </section>
+
+        <!-- Staking Section -->
+        <section id="stakingSection">
+            <h3>Staking 15%/year</h3>
+            <p>Please connect Binance Smart Chain First</p>
+            <input id="stakeAmount" type="number" placeholder="Enter $wXRP amount to stake">
+            <input id="referrer" type="text" placeholder="Enter referrer address (optional)">
+            <button id="stakeButton" onclick="stakeTokens()">Stake</button>
+            <p id="stakingTxHash" style="display:none; color:blue;">Transaction Hash: </p>
+        
+            <div id="loadingIndicator" style="display:none;">Processing transaction...</div>
+            <div id="approveProcessing" style="display:none;">Processing approval...</div>
+            <div id="approveComplete" style="display:none;">Approval complete. Now you can stake your tokens!</div>
+        </section>
+        
+
+       
+
+        <!-- Unstaking Section -->
+        <section id="unstakingSection">
+            <h3>Unstaking</h3>
+            <input id="unstakeAmount" type="number" placeholder="Enter amount to unstake">
+            <button id="unstakeButton">Unstake</button>
+            <p id="unstakingTxHash" style="display:none; color:blue;">Transaction Hash: </p>
+        </section>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 wRipple Staking. All Rights Reserved.</p>
+        <p><a href="https://github.com/yourproject" target="_blank">View on GitHub</a></p>
+    </footer>
+
+    <!-- JavaScript to handle interaction -->
+    <script src="js/script.js"></script>
+    
+</body>
+</html>
