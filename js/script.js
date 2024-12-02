@@ -68,24 +68,6 @@ async function updateUserInfo() {
     }
 }
 
-// Update User Rewards (Pending + Calculated + Rewards)
-async function updateUserRewards() {
-    try {
-        const pendingRewards = await stakingContract.methods.pendingRewards(userAccount).call();
-        const rewards = await stakingContract.methods.rewards(userAccount).call(); // Accumulated rewards
-        const calculatedRewards = await stakingContract.methods.calculateRewards(userAccount).call(); // Calculated rewards from staking
-
-        // Total rewards = calculated + pending + existing rewards
-        const totalRewards = parseFloat(web3.utils.fromWei(calculatedRewards, "ether")) +
-                             parseFloat(web3.utils.fromWei(rewards, "ether")) +
-                             parseFloat(web3.utils.fromWei(pendingRewards, "ether"));
-
-        document.getElementById("userRewards").innerText = totalRewards.toFixed(4); // Display total rewards
-    } catch (error) {
-        console.error("Error updating rewards:", error);
-        alert("Could not fetch rewards data. Please try again.");
-    }
-}
 
 // Display Pending Rewards (On page load)
 async function displayPendingRewards() {
@@ -182,6 +164,7 @@ async function approveTokens(amount) {
         const tokenContract = new web3.eth.Contract(ERC20_ABI, tokenAddress);
         const amountInWei = web3.utils.toWei(amount, "ether");
 
+        // Kiểm tra allowance
         const allowance = await tokenContract.methods.allowance(userAccount, contractAddress).call();
         if (parseInt(allowance) >= amountInWei) {
             console.log("Tokens already approved.");
@@ -189,6 +172,7 @@ async function approveTokens(amount) {
             return; 
         }
 
+        // Phê duyệt token
         await tokenContract.methods.approve(contractAddress, amountInWei).send({ from: userAccount });
         showToast("Tokens approved successfully!", "success");
 
@@ -222,20 +206,26 @@ async function unstakeTokens() {
     }
 }
 
+let isProcessingClaim = false;
 
-// Claim Rewards
 async function claimRewards() {
+    if (isProcessingClaim) {
+        console.log("Claim already in progress.");
+        return;
+    }
+
+    isProcessingClaim = true;
+
     try {
         if (!web3 || !userAccount) {
-            showToast("Please connect your wallet to claim rewards.", "error");  // Hiển thị thông báo ngay tại đây
-            return;  
+            showToast("Please connect your wallet to claim rewards.", "error");  
+            return;
         }
 
         const tx = await stakingContract.methods.claim().send({ from: userAccount });
 
         if (tx && tx.transactionHash) {
             showToast("Claim successful! Rewards received.", "success");
-
             await updateUserInfo(); 
 
             const claimTxLink = `https://bscscan.com/tx/${tx.transactionHash}`;
@@ -251,8 +241,11 @@ async function claimRewards() {
         } else if (error.message.includes("Wallet not connected")) {
         } else {
         }
+    } finally {
+        isProcessingClaim = false; // Reset processing flag
     }
 }
+
 
 async function updateCalculatedRewards() {
     try {
@@ -279,7 +272,6 @@ function showToast(message, type) {
     }).showToast();
 }
 
-// Update Cooldown Time and Check Claim Eligibility
 async function updateCooldownTime() {
     try {
         const lastClaimTime = await stakingContract.methods.lastClaimedTime(userAccount).call();
@@ -299,6 +291,7 @@ async function updateCooldownTime() {
         console.error("Failed to fetch cooldown time:", error);
     }
 }
+
 
 // Start Cooldown Timer
 function startCooldownTimer(timeRemaining) {
